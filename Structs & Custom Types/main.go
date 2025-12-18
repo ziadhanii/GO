@@ -45,7 +45,11 @@ func handleUser() {
 	fmt.Print("Enter Your Birthday: ")
 	fmt.Scanln(&birthday)
 
-	u := user.New(firstName, lastName, birthday)
+	u, err := user.New(firstName, lastName, birthday)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	u.Print()
 }
 
@@ -67,6 +71,10 @@ func handleAdmin() {
 	fmt.Print("Enter Your Birthday: ")
 	fmt.Scanln(&birthday)
 
-	a := user.NewAdmin(firstName, lastName, birthday, email, password)
+	a, err := user.NewAdmin(firstName, lastName, birthday, email, password)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
 	a.Print()
 }

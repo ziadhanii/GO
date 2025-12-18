@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"fmt"
 	"time"
 )
@@ -19,16 +20,25 @@ type Admin struct {
 	User
 }
 
-func New(firstName, lastName, birthday string) *User {
+func New(firstName, lastName, birthday string) (*User, error) {
+
+	if firstName == "" || lastName == "" || birthday == "" {
+		return nil, errors.New("first name, last name and birthday are required")
+	}
+
 	return &User{
 		firstName: firstName,
 		lastName:  lastName,
 		birthday:  birthday,
 		createdAt: time.Now(),
-	}
+	}, nil
 }
 
-func NewAdmin(firstName, lastName, birthday, email, password string) *Admin {
+func NewAdmin(firstName, lastName, birthday, email, password string) (*Admin, error) {
+
+	if firstName == "" || lastName == "" || birthday == "" {
+		return nil, errors.New("first name, last name , birthday , email and password are required")
+	}
 	return &Admin{
 		email:    email,
 		password: password,
@@ -39,7 +49,7 @@ func NewAdmin(firstName, lastName, birthday, email, password string) *Admin {
 			birthday:  birthday,
 			createdAt: time.Now(),
 		},
-	}
+	}, nil
 }
 
 func (u *User) printBase() {
